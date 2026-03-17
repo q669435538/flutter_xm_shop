@@ -1,0 +1,22 @@
+{
+  // FVM Flutter SDK 配置 - 使用相对路径指向当前项目版本
+  "dart.flutterSdkPath": ".fvm/flutter_sdk",
+  // 配置多个 Flutter SDK 路径，方便在 Command Palette 中切换
+  "dart.flutterSdkPaths": [
+    "/Users/yangshucheng/fvm/versions/3.35.4",
+    "/Users/yangshucheng/fvm/versions/3.35.1",
+    "/Users/yangshucheng/fvm/versions/3.35.0",
+    "/Users/yangshucheng/fvm/versions/3.24.4"
+  ],
+  // 启用 Flutter 相关功能
+  "dart.previewFlutterUiGuides": true,
+  "dart.previewFlutterUiGuidesCustomTracking": true,
+  // 代码格式化
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  // Flutter 特定设置
+  "dart.debugExternalPackageLibraries": false,
+  "dart.debugSdkLibraries": false
+}
