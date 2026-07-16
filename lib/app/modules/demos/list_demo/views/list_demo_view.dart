@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/list_demo_controller.dart';
 import '../../../../services/keepalive_wrapper.dart';
-import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 
 class ListDemoView extends GetView<ListDemoController> {
   const ListDemoView({super.key});
@@ -138,10 +137,9 @@ class _GridDemoState extends State<GridDemo> {
         itemCount: controller.words.length,
         itemBuilder: (BuildContext context, int index) {
           final bgColor = Colors.primaries[index % Colors.primaries.length]
-              .withValues(alpha: 0.5);
-          final textColor = bgColor.computeLuminance() > 0.5
-              ? Colors.black
-              : Colors.white;
+              .withOpacity(0.5);
+          final textColor =
+              bgColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
           return Container(
             margin: const EdgeInsets.all(0),
             decoration: BoxDecoration(
@@ -189,14 +187,14 @@ class SliverListDemo extends StatelessWidget {
       children: [
         Expanded(
           child: Padding(
-            padding: EdgeInsetsGeometry.only(left: 8, right: 8),
+            padding: EdgeInsets.only(left: 8, right: 8),
             child: Divider(height: 2),
           ),
         ),
         Text(words[index], style: TextStyle(color: Colors.grey, fontSize: 12)),
         Expanded(
           child: Padding(
-            padding: EdgeInsetsGeometry.only(left: 8, right: 8),
+            padding: EdgeInsets.only(left: 8, right: 8),
             child: Divider(height: 2),
           ),
         ),
@@ -217,23 +215,22 @@ class SliverListDemo extends StatelessWidget {
             child: PageViewDemo(),
           ),
         ),
-        SliverList.separated(
-          itemBuilder: (context, index) {
-            if (index == words.length - 1) {
+        SliverList(
+          delegate: SliverChildBuilderDelegate((context, index) {
+            if (index.isOdd) {
+              return customSeparaterBuidler(index ~/ 2);
+            }
+            final itemIndex = index ~/ 2;
+            if (itemIndex == words.length - 1) {
               return Column(
                 children: [
-                  ListTile(title: Text(words[index])),
-                  customSeparaterBuidler(index),
+                  ListTile(title: Text(words[itemIndex])),
                   SizedBox(height: 20),
                 ],
               );
             }
-            return ListTile(title: Text(words[index]));
-          },
-          separatorBuilder: (context, index) {
-            return customSeparaterBuidler(index);
-          },
-          itemCount: words.length,
+            return ListTile(title: Text(words[itemIndex]));
+          }, childCount: words.length * 2 - 1),
         ),
       ],
     );
@@ -364,29 +361,21 @@ class _SnapAppBarDemoState extends State<SnapAppBarDemo> {
   }
 
   showAdaptAlert() async {
-    final result = await FlutterPlatformAlert.showCustomAlert(
-      windowTitle: '这是一个标题',
-      text: '''这是弹框的内容<int, Color>{
-    50: Color(0xFFF3E5F5),
-    100: Color(0xFFE1BEE7),
-    200: Color(0xFFCE93D8),
-    300: Color(0xFFBA68C8),
-    400: Color(0xFFAB47BC),
-    500: Color(_purplePrimaryValue),
-    600: Color(0xFF8E24AA),
-    700: Color(0xFF7B1FA2),
-    800: Color(0xFF6A1B9A),
-    900: Color(0xFF4A148C),
-  }''',
-      iconStyle: IconStyle.warning,
-      positiveButtonTitle: '确定',
-      negativeButtonTitle: '取消',
-      neutralButtonTitle: '忽略',
-      options: PlatformAlertOptions(
-        ios: IosAlertOptions(
-          alertStyle: IosAlertStyle.actionSheet,
-          negativeButtonStyle: IosButtonStyle.destructive,
-        ),
+    final result = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('这是一个标题'),
+        content: Text('这是弹框的内容'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop('cancel'),
+            child: Text('取消'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop('confirm'),
+            child: Text('确定'),
+          ),
+        ],
       ),
     );
     print(result);
