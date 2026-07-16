@@ -37,26 +37,15 @@ void main() {
   runApp(
     ScreenUtilInit(
       designSize: const Size(1080, 2400),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
+      builder: () {
         return GetMaterialApp(
           theme: ThemeData(
             primarySwatch: createMaterialColor(Color(0xFFE37036)),
             primaryColor: Color(0xFFE37036),
-
-            // visualDensity: VisualDensity.adaptivePlatformDensity,
-            appBarTheme: const AppBarTheme(
-              elevation: 0,
-              // backgroundColor: Colors.blueAccent,
-              // foregroundColor: Colors.black,
-              centerTitle: true,
-            ),
+            appBarTheme: const AppBarTheme(elevation: 0, centerTitle: true),
             bottomNavigationBarTheme: const BottomNavigationBarThemeData(
               selectedItemColor: Color(0xFFE37036),
               unselectedItemColor: Colors.grey,
-              // selectedFontSize: 14,
-              // unselectedFontSize: 14,
               type: BottomNavigationBarType.fixed,
             ),
           ),

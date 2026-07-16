@@ -16,12 +16,10 @@ class CategoryView extends GetView<CategoryController> {
         title: const Text('CategoryView'),
         centerTitle: true,
         // backgroundColor: Colors.deepOrangeAccent,
-        actionsPadding: EdgeInsets.zero,
         bottom: TabBar(
           controller: controller.tabController,
           indicatorColor: Colors.redAccent,
-          tabAlignment: TabAlignment.start,
-          indicatorPadding: EdgeInsetsGeometry.only(bottom: 4),
+          indicatorPadding: EdgeInsets.only(bottom: 4),
           indicatorWeight: 4,
           isScrollable: true,
           labelColor: Colors.red,
@@ -178,11 +176,10 @@ class CategoryView extends GetView<CategoryController> {
               child: SizedBox(
                 width: double.infinity,
                 height: 100,
-                child: Flex(
-                  spacing: 100,
-                  direction: Axis.horizontal,
+                child: Row(
                   children: [
                     Expanded(child: Container(color: Colors.amberAccent)),
+                    SizedBox(width: 100),
                     Expanded(child: Container(color: Colors.blueAccent)),
                   ],
                 ),

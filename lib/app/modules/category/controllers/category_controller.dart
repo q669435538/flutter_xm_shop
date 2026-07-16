@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CategoryController extends GetxController
-    with GetTickerProviderStateMixin {
+    with SingleGetTickerProviderMixin {
   //TODO: Implement CategoryController
 
   final count = 0.obs;
